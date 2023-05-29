@@ -5,8 +5,8 @@ const router =require("./router.js")
 
 
 //Mongo DB chaqirish
-const db = require("./server").db();
-const mongodb =require("mongodb")
+// const db = require("./server").db();
+// const mongodb =require("mongodb")
 
 
 
