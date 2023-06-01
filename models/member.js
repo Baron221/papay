@@ -8,25 +8,21 @@ class Member{
     async signupData(input){
         try{
             const new_member =new this.memberModel(input);
+            let result;
 
             try{
-                const result = await new_member.save();
+                result = await new_member.save();
 
-            }catch(mango_err){
+            }catch(mongo_err){
+                console.log(mongo_err)
                 throw new Error(Definer.auth_err1)
 
             }
 
-
-
-
-            console.log(result);
             result.mb_password = "";
-
             return result;
-        }
-        catch(err){
-            throw err
+        }catch(err){
+          throw err;
 
         }
     }
