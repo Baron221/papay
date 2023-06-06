@@ -9,7 +9,7 @@ memberController.signup = async (req, res) => {
       member = new Member(),
       new_member = await member.signupData(data);
 
-// TODO: Autheticate
+    // TODO: Autheticate
 
     res.json({ state: "succeed", data: new_member });
   } catch (err) {
