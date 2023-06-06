@@ -8,6 +8,9 @@ memberController.signup = async (req, res) => {
     const data = req.body,
       member = new Member(),
       new_member = await member.signupData(data);
+
+// TODO: Autheticate
+
     res.json({ state: "succeed", data: new_member });
   } catch (err) {
     console.log(`ERROR , cont/signup ${err.message}`);
