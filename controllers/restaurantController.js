@@ -75,3 +75,12 @@ restaurantController.logout = (req, res) => {
   console.log("GET cont.logout");
   res.send("logout sahifasidasiz");
 };
+
+
+restaurantController.checkSessions = (req, res) => {
+   if(req.session?.member){
+    res.json({ state:'succeed' , data: req.session.member})
+   }else{
+    res.json({state:'fail',message:'You are not authenticated'})
+   }
+};
