@@ -9,6 +9,7 @@ function getTargetImageStorage(address) {
       cb(null, `./uploads/${address}`);
     },
     filename: function (req, file, cb) {
+      req.baron ="from MIT4"
       console.log(file);
       const extension = path.parse(file.originalname).ext;
       const random_name = uuid.v4() + extension;

@@ -24,7 +24,7 @@ router_bssr.get("/products/menu", restaurantController.getMyRestaurantData);
 router_bssr.post(
   "/products/create",
   restaurantController.validateAuthRestaurant,
-  uploader_product.array("product_images", 6),
+  uploader_product.array("product_images", 2),
   productController.addNewProduct
 );
 router_bssr.post("products/edit/:id", productController.updateChosenProduct);
