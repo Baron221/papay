@@ -38,26 +38,30 @@ restaurantController.getSignUpMyRestaurant = async (req, res) => {
     res.json({ state: "fail", message: err.message });
   }
 };
-
 restaurantController.signupProcess = async (req, res) => {
   try {
-    console.log("POST:cont/signup");
-    console.log("sessionniki:1::",req.session.member)
+    console.log("POST: cont/signupProcess");
+    assert(req.file, Definer.general_err3);
 
-    const data = req.body,
-      member = new Member(),
-      new_member = await member.signupData(data);
+     let new_member = req.body;
+     new_member.mb_type = 'RESTAURANT';
+     new_member.mb_image = req.file.path;
+      // console.log('body:::', req.body);
+      
+      const member = new Member();
+      const result = await member.signupData(new_member);
+      assert(result, Definer.general_err1);
 
-
-    req.session.member = new_member;
-    console.log("sessionniki:2::",req.session.member)
+    req.session.member = result;
     res.redirect("/resto/products/menu");
+    // SESSION
+
+    // res.json({state: "succeed", data: new_member});
   } catch (err) {
-    console.log(`ERROR , cont/signup ${err.message}`);
+    console.log(`ERROR, cont/signupProcess, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };
-
 restaurantController.getLoginMyRestaurant = async (req, res) => {
   try {
     console.log("GET: cont/getLoginMyRestaurant");

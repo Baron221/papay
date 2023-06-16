@@ -4,6 +4,7 @@
 
 <body>
   <form
+    onsubmit="return validatedSignUpForm()"
     class="login_container"
     action="/resto/sign-up"
     method="POST"
@@ -27,6 +28,7 @@
           <input
             type="text"
             name="mb_nick"
+            class="mb_nick"
             placeholder="Foydalanuvchining ismi"
             value=""
             required
@@ -37,6 +39,7 @@
           <input
             type="text"
             name="mb_phone"
+            class="mb_phone"
             placeholder="Telfon raqam"
             value=""
             required
@@ -50,6 +53,7 @@
           <input
             type="password"
             name="mb_password"
+            class="mb_password"
             placeholder="password"
             value=""
             required
@@ -60,9 +64,10 @@
           <input
             type="password"
             name="mb_confir_password"
-            placeholder="passwordni tasdiqlash"
-            value=""
-            required
+            class="mb_confir_password"
+            placeholder="passwordni tasdiqlash" 
+            value=""; 
+            required 
           />
         </div>
       </div>
@@ -78,7 +83,7 @@
                 value="Rasmni tanlang"
                 disabled="disabled"
               />
-              <label> Rasmni Yuklash</label>
+              <label for="input_file"> Rasm Yuklash</label>
               <input
                 type="file"
                 id="input_file"
@@ -88,16 +93,18 @@
               />
             </div>
             <p class="thumbnail_desc">
-                 Oshxona rasmingizni bu erga yuklang.<br> 
-                 Muhim kurstamalar: .jpg, .jpeg,
-            yoki .pnp.<br/> rasmda matn yo'q bo'lishi darkor!
-        </p>
+              Oshxona rasmingizni bu erga yuklang.<br />
+              Muhim kurstamalar: .jpg, .jpeg, yoki .png.<br />
+              rasmda matn yo'q bo'lishi darkor!
+            </p>
           </div>
         </div>
       </div>
+
       <button class="login_btn btn" name="signup" type="submit">
         Ro'yhatdan o'tish
       </button>
+
     </div>
   </form>
 </body>
