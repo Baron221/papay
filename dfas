@@ -1,0 +1,34 @@
+[33me4197b4[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m fix: rasm yuklash togirlandi
+[33m4ee4445[m fix:uplaod fixed
+[33m4fc6bb4[m feat:start new product creation logic
+[33mc9b8c5e[m fix : modify logout business logic
+[33md2c3e94[m fix : signup in login page
+[33ma6422a4[m fix:assert and Define fixed
+[33mde7c9cc[m fix : rasm yuklash fixed
+[33ma7d259e[m fix: develop business logic of signup page
+[33md685fff[m feat:adminka signup page publishing
+[33m3b064b8[m feat:publish login page of adminka
+[33m2284781[m feat:develop adminka homepage
+[33m0a89fd3[m feat:restaurant user getting restaurant related products
+[33m3713669[m feat:develop restaurant users editing their products
+[33m8b672b9[m feat:yangi productlarni restaurant userlar hosil qilish
+[33m5fd8656[m feat:develop Product Schema model to work with database
+[33mb6ba96b[m fix:modify image uploader utils
+[33mba6bb02[m feat:multer single image upload process
+[33m7aabbe2[m feat:develop Product controller logic
+[33m8c2ebf1[m feat:added 'check-me session
+[33m4150b44[m feat:develop session authentification of restaurant
+[33mbfbaf42[m feat:ejs framework orqali frontendni qurishni boshlash
+[33m91b1b29[m fix:some changes
+[33m2bc2634[m feat:bcrypt package asosida himoyani passwordni hash qilish
+[33m610988d[m fix:fixed catch error
+[33m918f356[m feat: member login process development
+[33m38eb27c[m feat:develop signup
+[33m6808efd[m feat:develo signup
+[33m58f08df[m fix:modify member schema model part 2
+[33mb388da2[m feat:mongoose connection va member schema model qurish
+[33mdef0a7e[m feat:controllerlarni qurish
+[33md42c590[m feat:routerni qurib olish
+[33md216cb8[m feat:dotenv & project configuration
+[33mc326a64[m feat:loyihani express qismini shakllantrib olish
+[33me6a555f[m BRR:Initial Setup
