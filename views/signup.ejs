@@ -35,12 +35,12 @@
           />
         </div>
         <div class="sign_up_frame">
-          <label>Telfon raqam</label>
+          <label>Telefon raqam</label>
           <input
             type="text"
             name="mb_phone"
             class="mb_phone"
-            placeholder="Telfon raqam"
+            placeholder="Telefon raqam"
             value=""
             required
           />
@@ -63,8 +63,8 @@
           <label>Passwordni tasdiqlash</label>
           <input
             type="password"
-            name="mb_confir_password"
-            class="mb_confir_password"
+            name="mb_confirm_password"
+            class="mb_confirm_password"
             placeholder="passwordni tasdiqlash" 
             value=""; 
             required 
@@ -114,7 +114,7 @@
     let filename = '';
     fileTarget.on('change', function() {
       if(window.FileReader) {
-        const uploading_file = $(this) [0].files[0];
+        const uploading_file = $(this)[0].files[0];
         const fileType = uploading_file['type'];
         const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
         if(!validImageTypes.includes(fileType)) {
@@ -127,12 +127,14 @@
             .attr('src', URL.createObjectURL(uploading_file))
             .addClass('success');
           }
-          filename = uploading_file.name;
+          let filename = uploading_file.name;
         }
       }
       $(this).siblings('.upload-name').val(filename);
     });
   });
+
+
     function validatedSignUpForm() {
       const mb_nick = $(".mb_nick").val();  //inputni qiymatini olishda val() ishlatamiz
       const mb_phone = $(".mb_phone").val();

@@ -100,7 +100,7 @@ body {
   width: 100%;
   height: auto;
   display: flex;
-7+  flex-direction: column;
+  flex-direction: column;
 }
 
 .login_input_container label {
