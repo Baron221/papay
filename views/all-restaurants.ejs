@@ -56,7 +56,7 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
-                                    <td style="width: 13%;"><select class="spec_select mb_status">
+                                    <td style="width: 13%;"><select class="spec_select mb_status" id="<%= value._id%>">
                                             <option value="ONPAUSE" <%=value.mb_status==='ONPAUSE' ? 'selected' : "" %>
                                                 >ONPAUSE</option>
                                             <option value="ACTIVE" <%=value.mb_status==='ACTIVE' ? 'selected' : "" %>
@@ -74,7 +74,7 @@
             </div>
             <script>
                 $(function () {
-                    //TODO : manipulate restaurants top fatures
+                    //TODO : manipulate restaurants top features
 
                     $(".mb_top").on('change', function (e) {
                         const id = e.target.id;
@@ -85,7 +85,24 @@
                          if(result.state ==="success") alert('successfully updated');
                          else alert(result.message)       
                     })
-                            .catch(err => console.log(err));
+                     .catch(err => console.log(err));
+
+                    });
+
+
+                    // manipulate restaurants status
+                    $(".mb_status").on('change', function (e) {
+                        const id = e.target.id;
+                        const mb_status = $(`#${id}.mb_status`).val();
+
+                        console.log(mb_status)
+
+                        axios.post('/resto/all-restaurant/edit', { id: id, mb_status: mb_status }).then(response => {
+                         const result = response.data;
+                         if(result.state ==="success") alert('successfully updated');
+                         else alert(result.message)       
+                    })
+                    .catch(err => console.log(err));
 
                     })
                 })
