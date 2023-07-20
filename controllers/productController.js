@@ -7,17 +7,29 @@ productController.getAllProducts = async (req, res) => {
   try {
     console.log("GET : cont/getAllProducts");
     const product = new Product();
-    const results= await product.getAllProductsData(req.member , req.body);
-    res.json({state:"succeed", data:results})
+    const results = await product.getAllProductsData(req.member, req.body);
+    res.json({ state: "succeed", data: results });
   } catch (err) {
     console.log(`ERROR  , cont/getAllProducts , ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };
 
+productController.getChosenProduct = async (req, res) => {
+  try {
+    console.log("POST : cont/getChosenProduct");
+    const product = new Product();
+    const id = req.params.id;
+    const result = await product.getChosenProductData(req.member, id);
+    res.json({ state: "succeed", data: result });
+    console.log(result)
+  } catch (err) {
+    console.log(`ERROR  , cont/getChosenProduct , ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
 
 /**BSSSR RELATED PRODUCTS */
-
 
 productController.addNewProduct = async (req, res) => {
   try {
@@ -45,13 +57,14 @@ productController.updateChosenProduct = async (req, res) => {
     console.log("POST : cont/updateChosenProduct");
     const product = new Product();
     const id = req.params.id;
-    const result = await product.updateChosenProductData( id,req.body,req.member._id);
-    await res.json({state: "success",data:result});
+    const result = await product.updateChosenProductData(
+      id,
+      req.body,
+      req.member._id
+    );
+    await res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR  , cont/updateChosenProduct , ${err.message}`);
     res.json({ state: "fail", message: err.message });
-
   }
 };
-
-

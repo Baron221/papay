@@ -13,9 +13,9 @@ class View {
       switch (group_type) {
         case "member":
           result = await this.memberModel
-            .findById({
+            .findOne({
               _id: view_ref_id,
-              mb_status: "ACTIVE",
+              product_status: "ACTIVE",
             })
             .exec();
           break;

@@ -3,6 +3,8 @@ const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
 const { shapeIntoMongooseObjectId } = require("../lib/config");
+const View = require("./View");
+
 
 class Member {
   constructor() {

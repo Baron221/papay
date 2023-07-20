@@ -2,6 +2,8 @@ const { shapeIntoMongooseObjectId } = require("../lib/config");
 const ProductModel = require("../schema/product.model");
 const assert = require("assert");
 const Definer = require("../lib/mistake");
+const Member = require("./Member");
+
 
 class Product {
   constructor() {
@@ -35,6 +37,28 @@ class Product {
     }
 
   }
+
+
+  async getChosenProductData(member, id){
+    try{
+      const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
+      id = shapeIntoMongooseObjectId(id);
+      if(member){
+        const member_obj = new Member();
+        member_obj.viewChosenItemByMember(member, id, "product");
+      }
+     
+      const result = await this.productModel.aggregate([
+        {$match:{_id:id , product_status:'PROCESS'}},
+        //todo : check auth member product likes
+      ]).exec();
+      assert.ok(result ,Definer.general_err1);
+      return result;
+    }catch(err){
+      throw err
+    }
+  }
+
   async getAllProductsDataResto(member) {
     try {
       member._id = shapeIntoMongooseObjectId(member._id);
@@ -56,7 +80,7 @@ class Product {
       const new_product = new this.productModel(data);
       const result = await new_product.save();
 
-      // assert.ok(result , Definer.product_err1);
+      assert.ok(result , Definer.product_err1);
       return result;
     } catch (err) {
       throw err;
@@ -66,6 +90,8 @@ class Product {
   async updateChosenProductData(id, updated_data, mb_id) {
     try {
       id = shapeIntoMongooseObjectId(id);
+      mb_id = shapeIntoMongooseObjectId(mb_id);
+
       const result = await this.productModel
         .findOneAndUpdate({ _id: id, restaurant_mb_id: mb_id }, updated_data, {
           runValidators: true,

@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const memberController = require("./controllers/memberController");
 const productController = require("./controllers/productController")
+const restaurantController = require("./controllers/restaurantController")
+const router_bssr = require("./router_bssr");
+
 /************************************************
  *                       REST API                                 *
  ************************************************/
@@ -18,10 +21,19 @@ router.get(
   memberController.getChosenMember
 );
 
-//boshqa routerlar
+//product related routerlar
 router.post("/products",
 memberController.retrieveAuthMember,
 productController.getAllProducts);
+
+router.get("/products/:id" , 
+memberController.retrieveAuthMember ,
+productController.getChosenProduct);
+
+
+router.get("/restaurants",
+memberController.retrieveAuthMember , 
+restaurantController.getRestaurants)
 
 
 module.exports = router;
