@@ -6,7 +6,7 @@ const mongoose =require("mongoose");
 mongoose.set('strictQuery', true)
 
 let db;
-const connectionString =process.env.MONGO_URL;
+const connectionString = process.env.MONGO_URL;
 
 mongoose.connect(connectionString,
     {

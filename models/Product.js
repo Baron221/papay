@@ -45,7 +45,7 @@ class Product {
       id = shapeIntoMongooseObjectId(id);
       if(member){
         const member_obj = new Member();
-        member_obj.viewChosenItemByMember(member, id, "product");
+        await member_obj.viewChosenItemByMember(member, id, "product");
       }
      
       const result = await this.productModel.aggregate([
