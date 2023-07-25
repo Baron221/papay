@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const memberController = require("./controllers/memberController");
-const productController = require("./controllers/productController")
-const restaurantController = require("./controllers/restaurantController")
-const orderController = require("./controllers/orderController")
+const productController = require("./controllers/productController");
+const restaurantController = require("./controllers/restaurantController");
+const orderController = require("./controllers/orderController");
 
 const router_bssr = require("./router_bssr");
 
@@ -24,25 +24,41 @@ router.get(
 );
 
 //product related routerlar
-router.post("/products",
-memberController.retrieveAuthMember,
-productController.getAllProducts);
+router.post(
+  "/products",
+  memberController.retrieveAuthMember,
+  productController.getAllProducts
+);
 
-router.get("/products/:id" , 
-memberController.retrieveAuthMember ,
-productController.getChosenProduct);
+router.get(
+  "/products/:id",
+  memberController.retrieveAuthMember,
+  productController.getChosenProduct
+);
 
+router.get(
+  "/restaurants",
+  memberController.retrieveAuthMember,
+  restaurantController.getRestaurants
+);
 
-router.get("/restaurants",
-memberController.retrieveAuthMember , 
-restaurantController.getRestaurants)
+router.get(
+  "/restaurants/:id",
+  memberController.retrieveAuthMember,
+  restaurantController.getChosenRestaurant
+);
 
-router.get("/restaurants/:id",
-memberController.retrieveAuthMember , 
-restaurantController.getChosenRestaurant);
+//order Related routers
 
-router.post("/orders/create",
-memberController.retrieveAuthMember,
-orderController.createOrder)
+router.post(
+  "/orders/create",
+  memberController.retrieveAuthMember,
+  orderController.createOrder
+);
+
+router.get("/orders",
+  memberController.retrieveAuthMember,
+  orderController.getMyOrders
+);
 
 module.exports = router;
