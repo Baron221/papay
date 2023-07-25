@@ -116,6 +116,25 @@ class Order {
     } catch (err) {
       throw err;
     }
+  };
+
+  async editChosenOrderData(member,data){
+    try{
+      const mb_id = shapeIntoMongooseObjectId(member._id),
+      order_id = shapeIntoMongooseObjectId(data.order_id),
+      order_status = data.order_status.toUpperCase();
+
+      await this.orderModel.findOneAndUpdate(
+        {mb_id:mb_id,_id:order_id},
+        {order_status:order_status},
+        {runValidators:true, lean:true , returnDocument:"after"}
+      );
+      console.log(result);
+      assert.ok(result, Definer.order_err3)
+
+    }catch(err){
+
+    }
   }
 }
 
