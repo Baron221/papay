@@ -95,6 +95,26 @@ class Community {
             throw error;
         }
     }
+
+    
+    async getChosenArticlesData(member, art_id) {
+        try {
+            art_id = shapeIntoMongooseObjectId(art_id);
+
+            if (member) {
+                const member_obj = new Member();
+                await member_obj.viewChosenItemByMember(member, art_id, "community");
+            }
+
+            const result = await this.boArticleModel.findById({ _id: art_id }).exec();
+            assert.ok(result, Definer.article_err3);
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
 
 module.exports = Community;
