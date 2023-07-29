@@ -18,18 +18,19 @@ class Follow {
       const subscriber_id = shapeIntoMongooseObjectId(member._id);
       const follow_id = shapeIntoMongooseObjectId(data.mb_id);
 
-      const member_data = await this.memberModel.findById({ _id: follow_id }).exec();
+      const member_data = await this.memberModel
+        .findById({ _id: follow_id })
+        .exec();
       assert.ok(member_data, Definer.general_err2);
-
 
       const result = await this.createSubscriptionData(
         follow_id,
         subscriber_id
-      )
+      );
       assert.ok(result, Definer.general_err1);
 
-      await this.modifyMemberFollowCounts(follow_id, 'subscriber_change', 1);
-      await this.modifyMemberFollowCounts(subscriber_id, 'follow_change', 1);
+      await this.modifyMemberFollowCounts(follow_id, "subscriber_change", 1);
+      await this.modifyMemberFollowCounts(subscriber_id, "follow_change", 1);
       return true;
     } catch (error) {
       throw error;
@@ -40,30 +41,32 @@ class Follow {
     try {
       const new_follow = new this.followModel({
         follow_id: follow_id,
-        subscriber_id: subscriber_id
+        subscriber_id: subscriber_id,
       });
 
       return await new_follow.save();
     } catch (mongo_err) {
       console.log(mongo_err);
-      throw new Error(Definer.follow_err2)
+      throw new Error(Definer.follow_err2);
     }
   }
 
   async modifyMemberFollowCounts(mb_id, type, modifier) {
     try {
-      if (type === 'follow_change') {
+      if (type === "follow_change") {
         await this.memberModel
           .findOneAndUpdate(
             { _id: mb_id },
             { $inc: { mb_follow_cnt: modifier } }
-          ).exec();
-      } else if (type === 'subscriber_change') {
+          )
+          .exec();
+      } else if (type === "subscriber_change") {
         await this.memberModel
           .findOneAndUpdate(
             { _id: mb_id },
             { $inc: { mb_subscriber_cnt: modifier } }
-          ).exec();
+          )
+          .exec();
       }
       return true;
     } catch (error) {
@@ -78,20 +81,18 @@ class Follow {
 
       const result = await this.followModel.findOneAndDelete({
         follow_id: follow_id,
-        subscriber_id: subscriber_id
-      })
+        subscriber_id: subscriber_id,
+      });
       assert.ok(result, Definer.general_err1);
 
-      await this.modifyMemberFollowCounts(follow_id, "subscriber_change", -1)
+      await this.modifyMemberFollowCounts(follow_id, "subscriber_change", -1);
       await this.modifyMemberFollowCounts(subscriber_id, "follow_change", -1);
 
       return true;
-
     } catch (error) {
       throw error;
     }
   }
 }
-
 
 module.exports = Follow;
