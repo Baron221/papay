@@ -6,8 +6,6 @@ const { shapeIntoMongooseObjectId } = require("../lib/config");
 const View = require("./View");
 const Like = require("./Like");
 
-
-
 class Member {
   constructor() {
     this.memberModel = MemberModel;
@@ -88,13 +86,13 @@ class Member {
       const view = new View(mb_id);
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
       assert.ok(isValid, Definer.general_err2);
-      
-      const doesExist =await view.checkViewExistence(view_ref_id)
+
+      const doesExist = await view.checkViewExistence(view_ref_id);
       console.log("doesExist:", doesExist);
 
-      if(!doesExist){
-        const result = await view.insertMemberView(view_ref_id,group_type);
-        assert.ok(result ,Definer.general_err1)
+      if (!doesExist) {
+        const result = await view.insertMemberView(view_ref_id, group_type);
+        assert.ok(result, Definer.general_err1);
       }
 
       return true;
@@ -103,7 +101,6 @@ class Member {
     }
   }
 
-  
   async likeChosenItemByMember(member, like_ref_id, group_type) {
     try {
       const mb_id = shapeIntoMongooseObjectId(member._id);
@@ -117,18 +114,42 @@ class Member {
 
       let data = doesExist
         ? await like.removeMemberLike(like_ref_id, group_type)
-        : await like.insertMemberLike(like_ref_id, group_type)
+        : await like.insertMemberLike(like_ref_id, group_type);
 
       assert.ok(data, Definer.gereral_err1);
 
       const result = {
         like_group: data.like_group,
         like_ref_id: data.like_ref_id,
-        like_status: doesExist ? 0 : 1
+        like_status: doesExist ? 0 : 1,
       };
       return result;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async updateMemberData(id, data, image) {
+    try {
+      const mb_id = shapeIntoMongooseObjectId(id);
+      let params = {
+        mb_nick: data.mb_nick,
+        mb_phone: data.mb_phone,
+        mb_address: data.mb_address,
+        mb_description: data.mb_description,
+        mb_image: image ? image.path : null,
+      };
+
+      for (let prop in params) if (!params[prop]) delete params[prop];
+      const result = await this.memberModel.findOneAndUpdate(
+        { _id: mb_id },
+        params,
+        { runValidators: true, lean: true, returnDocument: "after" }
+      ).exec();
+      assert.ok(result,Definer.general_err1);
+      return result
+    } catch (err) {
+      throw err;
     }
   }
 }
