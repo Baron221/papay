@@ -3,8 +3,9 @@ const express = require("express");
 const app = express();
 const router = require("./router");
 const router_bssr = require("./router_bssr.js");
-const cors = require('cors')
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const http = require("http");
 
 let session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
@@ -16,12 +17,14 @@ const store = new MongoDbStore({
 // 1 express ga kirib kelyatgan malumotlarga bogliq bolgan kodlar yoziladi. KIRISH kodlari
 app.use(express.static("public"));
 app.use(express.json()); // kirib kelyatgan json formatdagi data ni objectga ogiradi
-app.use("/uploads", express.static(__dirname +'/uploads'))
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: true })); //html forumdan request qiladi
-app.use(cors({
-  credentials:true,
-  origin:true
-}))
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 app.use(cookieParser());
 
 //2 Session
@@ -49,4 +52,36 @@ app.set("view engine", "ejs");
 app.use("/resto", router_bssr);
 app.use("/", router);
 
-module.exports = app;
+const server = http.createServer(app);
+
+/**Socket.io Backend Server */
+const io = require("socket.io")(server, {
+  serveClient: false,
+  origins: "*:*",
+  transport: ["websocket", "xhr-polling"],
+});
+
+let online_users = 0;
+io.on('connection', function(socket){
+  online_users++;
+  console.log("New user total:" , online_users);
+  socket.emit('greetMsg',{text:"Welcome"});
+  io.emit('infoMsg' , {total:online_users});
+
+  socket.on('disconnect', function(){
+    online_users--;
+    socket.broadcast.emit('infoMsg' , {total:online_users});
+    console.log('client disconnected , total:', online_users)
+  })
+
+
+  socket.on('createMsg' , function(data){
+    console.log("createMsg",data);
+    io.emit('newMsg');
+  })
+  // socket.emit()
+  // socket.broadcast.emit()
+  // io.emit()
+})
+
+module.exports = server;
